@@ -1,5 +1,5 @@
 #include<stdio.h>
-#include<stdlib.h>    // to use system() method
+#include<stdlib.h>  
 
 int main()
 {
@@ -11,10 +11,7 @@ int main()
     scanf("%c", &ch);
 
     if(ch == 'y'|| ch == 'Y')
-    {   /*
-            /s is used to order the compiler 
-            to shutdown the PC
-        */
+    {  
         system("C:\\WINDOWS\\System32\\shutdown /s");
     }
 
