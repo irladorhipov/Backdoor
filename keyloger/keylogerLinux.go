@@ -27,7 +27,7 @@ func main() {
 	for {
 		event := kl.Read()
 		if event != nil {
-			fmt.Printf("Нажата клавиша: %s\n", event.KeyString)
+			fmt.Println("Нажата клавиша: %s\n", event)
 		}
 
 		select {
