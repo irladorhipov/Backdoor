@@ -8,8 +8,8 @@ int main(int argc, char *argv[]) {
 
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(window), "Ваш сеанс посчитался подозрительным сотрудниками отдела безопасности");
-    gtk_widget_set_size_request(window, 300, 200);
-    gtk_container_set_border_width(GTK_CONTAINER(window), 10);
+    gtk_widget_set_size_request(window, 1200, 1200);
+    gtk_container_set_border_width(GTK_CONTAINER(window), 30);
 
     dialog = gtk_message_dialog_new(GTK_WINDOW(window),
                                     GTK_DIALOG_MODAL,
