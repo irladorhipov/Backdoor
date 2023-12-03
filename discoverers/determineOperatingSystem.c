@@ -13,7 +13,19 @@
 int main() {
     printf("Операционная система: %sn", os);
     
-     if (strcmp(os, "Linux") == 0) {
+    if (strcmp(os, "Windows") == 0) {
+        system("./path/to/binary"); 
+    }
+
+    if (strcmp(os, "Linux") == 0) {
+        system("./path/to/binary"); 
+    }
+
+    if (strcmp(os, "MacOS") == 0) {
+        system("./path/to/binary"); 
+    }
+
+    if (strcmp(os, "Unknown") == 0) {
         system("./path/to/binary"); 
     }
 

