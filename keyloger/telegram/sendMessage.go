@@ -1,0 +1,5 @@
+package tg
+
+func SendMessage() {
+
+}
